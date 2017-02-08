@@ -1,0 +1,110 @@
+-- mdl2lus - 2014 ver. 0.41 (SHA 79444ea)
+-- Tue Jan 31 17:06:51 2017
+const distanceMin : real;
+node what_mode(Cd: real; distance: real) returns (Mode: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+   w_004: bool;
+   w_005: bool;
+   w_006: bool;
+   w_007: bool;
+   w_008: bool;
+   w_009: bool;
+   w_010: bool;
+   w_011: real;
+   w_012: bool;
+   w_013: real;
+let
+   w_012 = obs_detection_n(w_013, w_000);
+   w_009 = (not w_012);
+   w_005 = (w_010 and w_012);
+   w_013 = distance;
+   w_007 = (w_008 and w_012);
+   w_003 = black(w_004, w_000);
+   w_006 = first_white(w_007, w_000);
+   w_010 = (w_011 < 50.0);
+   w_011 = Cd;
+   w_002 = (w_007 and w_003);
+   w_008 = (w_011 > 50.0);
+   w_004 = (w_006 and w_005);
+   w_000 = (false -> (pre w_001));
+   w_001 = second_white(w_002, w_000);
+   Mode = w_009;
+tel
+node second_white(In1: bool; In2: bool) returns (obstacle: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+   w_004: bool;
+   w_005: bool;
+let
+   w_005 = (w_004 or w_002);
+   w_000 = (not w_001);
+   w_004 = (false -> (pre w_003));
+   w_003 = (w_005 and w_000);
+   obstacle = w_003;
+   w_002 = In1;
+   w_001 = In2;
+tel
+node first_white(In1: bool; In2: bool) returns (obstacle: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+   w_004: bool;
+   w_005: bool;
+let
+   w_005 = (w_004 or w_002);
+   w_000 = (not w_001);
+   w_004 = (false -> (pre w_003));
+   w_003 = (w_005 and w_000);
+   obstacle = w_003;
+   w_002 = In1;
+   w_001 = In2;
+tel
+node black(In1: bool; In2: bool) returns (obstacle: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+   w_004: bool;
+   w_005: bool;
+let
+   w_005 = (w_004 or w_002);
+   w_000 = (not w_001);
+   w_004 = (false -> (pre w_003));
+   w_003 = (w_005 and w_000);
+   obstacle = w_003;
+   w_002 = In1;
+   w_001 = In2;
+tel
+node obs_detection_n(distance: real; reset: bool) returns (obstacle: bool);
+var
+   w_000: bool;
+   w_001: real;
+   w_002: bool;
+   w_003: bool;
+   w_004: bool;
+   w_005: bool;
+   w_006: bool;
+   w_007: bool;
+   w_008: bool;
+let
+   w_002 = reset;
+   w_006 = (w_003 and w_005);
+   w_001 = distance;
+   w_003 = (w_000 or w_002);
+   w_000 = (w_001 < distanceMin);
+   w_007 = (false -> (pre w_004));
+   w_008 = (false -> (pre w_003));
+   w_004 = (w_006 <> w_007);
+   w_005 = (not w_008);
+   obstacle = w_004;
+tel
